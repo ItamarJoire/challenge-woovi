@@ -1,6 +1,15 @@
-import Tag from '/tag.png'
 
-export function ContainerPrice({ image, amount, total, value, valueTag, nameTag, showTag = 'hidden', borderRadius }){
+import Tag from '/tag.png'
+import { useState } from 'react'
+
+export function ContainerPrice({ amount, total, value, valueTag, nameTag, option, showTag = 'hidden', borderRadius }){
+  const [op, setOp] = useState('')
+
+  function handle(event){
+    console.log(event.target.value)
+    setOp(event.target.value)
+  }
+
   return(
     <div className={`border-l-2 border-r-2 border-b-2 ${borderRadius} border-zinc-200 p-5 relative `}>
       <div className='space-y-2'>
@@ -10,7 +19,10 @@ export function ContainerPrice({ image, amount, total, value, valueTag, nameTag,
             <p className='text-zinc-400 font-medium'>Total: {total}</p>
           </div>
 
-          <a href="#"><img src={image} className='rounded-full'/></a>
+          <label className='custom-radio'>
+            <input type="radio" name='option' value={option} onChange={handle}/>
+            <span class="checkmark"></span>
+          </label>
 
         </div>   
         

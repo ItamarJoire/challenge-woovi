@@ -10,12 +10,64 @@ select {
 }
 
 .select-container::after {
-  content: '▼'; 
+  content: '▼';
   position: absolute;
   right: 15px;
   top: 50%;
   transform: translateY(-40%);
-  pointer-events: none; 
+  pointer-events: none;
   font-size: 13px;
   color: #52525b;
+}
+
+/* Hide the default radio button */
+.custom-radio input[type='radio'] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Create a custom radio button */
+.custom-radio .checkmark {
+  position: relative;
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+
+  background-color: transparent;
+  border-radius: 50%;
+  border: 2px solid #ddd;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+/* On mouse-over, add a grey background color */
+.custom-radio input[type='radio']:hover ~ .checkmark {
+  cursor: pointer;
+}
+
+/* When the radio button is checked, add a blue background */
+.custom-radio input[type='radio']:checked ~ .checkmark {
+  background-color: #03d69d;
+  background-image: url('/check.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  border: 0;
+}
+
+
+/* Show the indicator (dot/circle) when checked */
+.custom-radio input[type='radio']:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.custom-radio .checkmark:after {
+  top: 50%;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: white;
+  transform: translate(-50%, -50%);
 }
