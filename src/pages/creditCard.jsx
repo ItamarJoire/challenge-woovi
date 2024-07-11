@@ -1,7 +1,6 @@
 import { Footer, Header, Payment } from "../components";
 import { GridContainer, TitleContainer } from "../containers";
 
-import IconArrowDown from '/arrow-down.svg'
 import IconLineCheckGreen from '/line-check-green.svg'
 
 export function CreditCard(){
@@ -39,10 +38,12 @@ export function CreditCard(){
             </div>
           </div>
 
-          <div className="relative">
+          <div className="relative select-container">
             <label className="text-sm text-zinc-700 bg-white absolute top-[-10px] left-[5px] px-2 ml-2">Parcelas</label>
-            <input type="text" className="text-zinc-700 border-2 w-full h-16 rounded-lg text-lg p-5 font-medium" value='1x de 15.300,00' />
-            <img src={IconArrowDown} className="absolute right-6 top-8"/>
+            <select type="text" className="text-zinc-700 border-2 w-full h-16 rounded-lg text-lg p-5 font-medium" >
+              <option value="2x de 15.300,00">1x de 15.300,00</option>
+              <option value="2x de 15.300,00">2x de 16.300,00</option>
+            </select>
           </div>
 
           <button className="bg-secondary flex gap-2 px-5 py-2 rounded-lg mt-5 mx-auto w-full ">

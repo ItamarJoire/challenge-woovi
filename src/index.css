@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: transparent;
+}
+
+.select-container::after {
+  content: '▼'; 
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-40%);
+  pointer-events: none; 
+  font-size: 13px;
+  color: #52525b;
+}
