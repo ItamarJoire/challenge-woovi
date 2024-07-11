@@ -1,8 +1,30 @@
-# React + Vite
+<img src="https://github.com/ItamarJoire/challenge-woovi/blob/master/public/logo.png" align="center" >
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+## Projeto  :computer: 
+<p>Desafio da Woovi em replicar interfaces apresentadas no Figma.</p>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+
+&nbsp;
+  
+## Layout :bookmark:
+  <img src="https://github.com/ItamarJoire/challenge-woovi/blob/master/public/cover.png" >
+  
+  
+&nbsp;
+  
+
+
+## Instruções para o iniciar :rocket:
+
+
+Para instalar as dependências execute o comando: `npm install`
+
+Para dar start na aplicação web execute: `npm run dev`
+
+Navegue nas rotas: `/`, `/pix` e `/credit-card`
+ 
+
+
+
+
