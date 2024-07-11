@@ -25,6 +25,17 @@ Para dar start na aplicação web execute: `npm run dev`
 Navegue nas rotas: `/`, `/pix` e `/credit-card`
  
 
+&nbsp;
+
+## Tecnologias
+  
+* [ReactJs](https://react.dev/)
+* [Vite](https://vitejs.dev/)
+* [Tailwinds CSS](https://tailwindcss.com/)
+* [Lucide](https://lucide.dev/guide/packages/lucide-react)
+  
+
+
 
 
 
