@@ -1,19 +1,14 @@
 import Tag from '/tag.png'
-import CircleEmpty from '/circle-empty.svg'
-import CircleCheck from '/circle-check.svg'
 
-import { Check } from 'lucide-react'
-
-import { ContainerPrice, Footer, Header } from '../components'
+import { Price, Footer, Header } from '../components'
 import { GridContainer, TitleContainer } from '../containers'
 import { useState } from 'react'
 
-export function Home(){
-  const [option, setOption] = useState('')
+import { useContext } from 'react'
+import { PaymentContext } from '../contexts/usePayment'
 
-  function handleOptionChange(event){
-    setOption(event.target.value)
-  }
+export function Home(){
+  const { setOption } = useContext(PaymentContext)
 
   return(
     <GridContainer>
@@ -36,7 +31,7 @@ export function Home(){
 
   
               <label className='custom-radio'>
-                <input type="radio" name='option' onChange={handleOptionChange} value='1' />
+                <input type="radio" name='option' onChange={(e) => setOption(e.target.value)} value='1' />
                 <span class="checkmark"></span>
               </label>
             </div>
@@ -62,7 +57,7 @@ export function Home(){
 
   
               <label className='custom-radio'>
-                <input type="radio" name='option' onChange={handleOptionChange} value='2' />
+                <input type="radio" name='option' onChange={(e) => setOption(e.target.value)} value='2' />
                 <span class="checkmark"></span>
               </label>
               
@@ -70,16 +65,16 @@ export function Home(){
           </div>
         </div>
 
-        <ContainerPrice 
+        <Price 
           amount='3x'
-          option='3'
+          op='3'
           value='10.196,66'
           total='30.620,00'
         />
 
-        <ContainerPrice 
+        <Price 
           amount='4x'
-          option='4'
+          op='4'
           value='7.725,00'
           total='30.900,00'
           showTag
@@ -87,23 +82,23 @@ export function Home(){
           nameTag='Melhor opção de parcelamento'
         />
 
-        <ContainerPrice 
+        <Price 
           amount='5x'
-          option='5'
+          op='5'
           value='6.300,00'
           total='31.500,00'
         />
 
-        <ContainerPrice 
+        <Price 
           amount='6x'
-          option='6'
+          op='6'
           value='5.283,33'
           total='31.699,98'
         />
 
-        <ContainerPrice 
+        <Price 
           amount='7x'
-          option='7'
+          op='7'
           value='4.452,8 5'
           total='31.800,00'
           borderRadius='rounded-b-xl'

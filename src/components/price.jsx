@@ -1,14 +1,10 @@
 
 import Tag from '/tag.png'
-import { useState } from 'react'
+import { useContext } from 'react'
+import { PaymentContext } from '../contexts/usePayment'
 
-export function ContainerPrice({ amount, total, value, valueTag, nameTag, option, showTag = 'hidden', borderRadius }){
-  const [op, setOp] = useState('')
-
-  function handle(event){
-    console.log(event.target.value)
-    setOp(event.target.value)
-  }
+export function Price({ amount, total, value, valueTag, nameTag, op, showTag = 'hidden', borderRadius }){
+  const { setOption } = useContext(PaymentContext)
 
   return(
     <div className={`border-l-2 border-r-2 border-b-2 ${borderRadius} border-zinc-200 p-5 relative `}>
@@ -20,7 +16,7 @@ export function ContainerPrice({ amount, total, value, valueTag, nameTag, option
           </div>
 
           <label className='custom-radio'>
-            <input type="radio" name='option' value={option} onChange={handle}/>
+            <input type="radio" name='option' value={op} onChange={(e) => setOption(e.target.value)}/>
             <span class="checkmark"></span>
           </label>
 
