@@ -3,7 +3,7 @@ import Tag from '/tag.png'
 import { Price, Footer, Header } from '../components'
 import { GridContainer, TitleContainer } from '../containers'
 
-import { useContext, useEffect } from 'react'
+import { useContext } from 'react'
 import { PaymentContext } from '../contexts/usePayment'
 
 import { Link } from 'react-router-dom'
@@ -18,7 +18,7 @@ export function Home(){
       <TitleContainer title='João, como você quer pagar?' />
 
       <form>
-        <div className={`${option === '1' ? 'border-primary bg-primary/5' : 'border-zinc-200'} border-2  rounded-[10px] p-5 relative`}>
+        {/* <div className={`${option === '1' ? 'border-primary bg-primary/5' : 'border-zinc-200'} border-2  rounded-[10px] p-5 relative`}>
           <div className='bg-zinc-200 inline-block px-5 py-1 rounded-full absolute top-[-18px]'>
             <span className='font-extrabold text-lg text-zinc-700'>Pix</span>
           </div>
@@ -68,23 +68,23 @@ export function Home(){
               </label>
             </div>   
           </div>
-        </div>
+        </div> */}
 
         <Price 
-          amount='3x'
-          op='3'
+          amount={3}
+          op={3}
           value='10.196,66'
           total='30.620,00'
         />
 
-        <Price 
+        {/* <Price 
           amount='4x'
           op='4'
           value='7.725,00'
           total='30.900,00'
           showTag
           valueTag='-3% de juros: '
-          nameTag='Melhor opção de parcelamento'
+          nameTag='Melhor opção de parcelamento' 
         />
 
         <Price 
@@ -107,7 +107,7 @@ export function Home(){
           value='4.452,8 5'
           total='31.800,00'
           borderRadius='rounded-b-xl'
-        />
+        /> */}
       </form>
 
       {activeButton ? (
