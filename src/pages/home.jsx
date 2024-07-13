@@ -62,7 +62,7 @@ export function Home(){
                   name='option' 
                   onChange={(e) => setOption(e.target.value)} 
                   value='2' 
-                  onClick={() => setActiveButton(!activeButton)}
+                  onClick={() => setActiveButton(true)}
                 />
                 <span className="checkmark"></span>
               </label>
