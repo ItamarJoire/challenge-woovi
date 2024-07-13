@@ -1,6 +1,6 @@
 
 import Tag from '/tag.png'
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { PaymentContext } from '../contexts/usePayment'
 
 export function Price({ 
@@ -8,31 +8,40 @@ export function Price({
   total, 
   value, 
   valueTag, 
-  nameTag, 
   showTag = 'hidden', 
-  op, 
+  nameTag, 
+  option, 
   showLabel ='hidden',
   nameLabel,
+  cashback = false,
+  percentageCashback,
   borderRadius 
 }){
   
-  const { option, setOption, setActiveButton } = useContext(PaymentContext)
+  const { setActiveButton, values, setValues } = useContext(PaymentContext)
 
-  const optionNumber = parseInt(option)
-  
-  function convertToNumber(value, total){
-    const numberStringValue = value.replace(/\./g, '').replace(',', '.');
-    const numberStringTotal = value.replace(/\./g, '').replace(',', '.');
+  useEffect(() => {
+    console.log(values)
+  }, [values])
 
-    return parseFloat(numberStringValue, numberStringTotal)
+  function updateValues(amount, value, total, option){
+    setValues({
+      amount: amount,
+      value: convertToNumber(value),
+      total: convertToNumber(total),
+      option: option
+    })
+
+    setActiveButton(true)
   }
 
-  value = convertToNumber(value)
-  total = convertToNumber(total)
-  console.log(value, total) 
-  
+  function convertToNumber(value){
+    let number = value.replace(/\./g, '').replace(',', '.');
+    return Number(number);
+  }
+
   return(
-    <div className={`${optionNumber === op ? 'border-primary bg-primary/5 border-2' : 'border-zinc-200'} border-l-2 border-r-2 border-b-2 ${borderRadius}  p-5 relative `}>
+    <div className={`${values.option === option ? 'border-primary bg-primary/5 border-2' : 'border-zinc-200'} border-l-2 border-r-2 border-b-2 ${borderRadius}  p-5 relative `}>
       
       <div className={`${showLabel} bg-zinc-200 inline-block px-5 py-1 rounded-full absolute top-[-18px]`}>
           <span className='font-extrabold text-lg text-zinc-700'>{nameLabel}</span>
@@ -42,11 +51,16 @@ export function Price({
         <div className='flex items-baseline justify-between'>
           <div>
             <p className='text-2xl font-semibold text-zinc-700'><span className='font-extrabold text-zinc-800'>{amount}x</span> R$ {value}</p>
-            <p className='text-zinc-400 font-medium'>Total: {total}</p>
+            {cashback ? (
+              <p className='text-xl text-primary font-medium'>Ganhe <span className='font-extrabold'>{percentageCashback}%</span> de Cashback</p>
+            ) : (
+              <p className='text-zinc-400 font-medium'>Total: {total}</p>
+            )}
+            
           </div>
 
           <label className='custom-radio'>
-            <input type="radio" name='option' value={op} onChange={(e) => setOption(e.target.value)} onClick={() => setActiveButton(true)}/>
+            <input type="radio" name='option' value={option} onClick={() => updateValues(amount, value, total, option)}/>
             <span class="checkmark"></span>
           </label>
 
