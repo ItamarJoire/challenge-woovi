@@ -2,14 +2,15 @@ import Tag from '/tag.png'
 
 import { Price, Footer, Header } from '../components'
 import { GridContainer, TitleContainer } from '../containers'
-import { useState } from 'react'
 
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { PaymentContext } from '../contexts/usePayment'
 
-export function Home(){
-  const { setOption } = useContext(PaymentContext)
+import { Link } from 'react-router-dom'
 
+export function Home(){
+  const { option, setOption, activeButton, setActiveButton } = useContext(PaymentContext)
+    
   return(
     <GridContainer>
       <Header />
@@ -17,7 +18,7 @@ export function Home(){
       <TitleContainer title='João, como você quer pagar?' />
 
       <form>
-        <div className='border-2 border-zinc-200 rounded-[10px] p-5 relative'>
+        <div className={`${option === '1' ? 'border-primary bg-primary/5' : 'border-zinc-200'} border-2  rounded-[10px] p-5 relative`}>
           <div className='bg-zinc-200 inline-block px-5 py-1 rounded-full absolute top-[-18px]'>
             <span className='font-extrabold text-lg text-zinc-700'>Pix</span>
           </div>
@@ -43,7 +44,7 @@ export function Home(){
           </div>
         </div>
 
-        <div className='border-2 border-primary bg-primary/5 rounded-t-[10px] p-5 relative mt-9'>
+        <div className={`${option === '2' ? 'border-primary bg-primary/5' : 'border-zinc-200'} border-2 rounded-t-[10px] p-5 relative mt-9`}>
           <div className='bg-zinc-200 inline-block px-5 py-1 rounded-full absolute top-[-18px]'>
             <span className='font-extrabold text-lg text-zinc-700'>Pix Parcelado</span>
           </div>
@@ -55,12 +56,16 @@ export function Home(){
                 <p className=' text-zinc-400 font-medium'>Total: RS 30.600,00</p>
               </div>
 
-  
               <label className='custom-radio'>
-                <input type="radio" name='option' onChange={(e) => setOption(e.target.value)} value='2' />
-                <span class="checkmark"></span>
+                <input 
+                  type="radio" 
+                  name='option' 
+                  onChange={(e) => setOption(e.target.value)} 
+                  value='2' 
+                  onClick={() => setActiveButton(!activeButton)}
+                />
+                <span className="checkmark"></span>
               </label>
-              
             </div>   
           </div>
         </div>
@@ -105,6 +110,18 @@ export function Home(){
         />
       </form>
 
+      {activeButton ? (
+        <Link to='/pix'>
+        <button className='bg-secondary flex gap-2 px-5 py-2 rounded-lg mt-10 mx-auto w-full'>
+          <p className="text-white text-lg font-semibold mx-auto">Avançar</p>
+        </button>
+        </Link>
+      ) : (
+        <button className='bg-zinc-300 cursor-not-allowed flex gap-2 px-5 py-2 rounded-lg mt-10 mx-auto w-full'>
+          <p className="text-white text-lg font-semibold mx-auto">Avançar</p>
+        </button>
+      )}
+      
       <Footer />
     </GridContainer>
   )

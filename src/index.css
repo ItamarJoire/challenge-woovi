@@ -55,7 +55,6 @@ select {
   border: 0;
 }
 
-
 /* Show the indicator (dot/circle) when checked */
 .custom-radio input[type='radio']:checked ~ .checkmark:after {
   display: block;
