@@ -7,11 +7,6 @@ export function PaymentProvider({children}){
   const [activeButton, setActiveButton] = useState(false)
   const [values, setValues] = useState([{}])
 
-  useEffect(() => {
-    // console.log(option)
-    // console.log(activeButton)
-  }, [option])
-
   return(
     <PaymentContext.Provider 
       value={{

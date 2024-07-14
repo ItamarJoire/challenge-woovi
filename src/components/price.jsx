@@ -19,10 +19,6 @@ export function Price({
   
   const { setActiveButton, values, setValues } = useContext(PaymentContext)
 
-  useEffect(() => {
-    console.log(values)
-  }, [values])
-
   function updateValues(numberOfInstallments, installmentValue, total, option){
     setValues({
       numberOfInstallments: numberOfInstallments,

@@ -12,6 +12,7 @@ export function Home(){
   const [ simulatedMoney, setSimulatedMoney ] = useState('')
 
   const [ moneyInStringFormat, setMoneyInStringFormat ] = useState('')
+  const [ moneyInStringFormat2, setMoneyInStringFormat2 ] = useState('')
   const [ moneyInNumberFormat, setMoneyInNumberFormat ] = useState(0)
 
   const [showInstallments, setShowInstallments] = useState(false)
@@ -29,7 +30,7 @@ export function Home(){
   function handleChangeSimulatedMoney(e){
 
     const formattedValue = formatInputValue(e.target.value);
-    
+
     // console.log('onChange: ', formattedValue)
     setSimulatedMoney(formattedValue);
 
@@ -65,11 +66,25 @@ export function Home(){
     });
 
     console.log('stringFormat:', stringFormat)
-    
+   
     setMoneyInStringFormat(stringFormat)
+
+    setMoneyInStringFormat2(stringFormat)
+
+  }
+
+  function formatCurrencyForStringAttributes(value){
+    const stringFormat = value.toLocaleString('pt-BR', {
+      style: 'decimal',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+
+    return stringFormat
   }
 
   let valueOfInstallments = [];
+  let valueOfInstallmentsForString = [];
 
   function calculateInstallments(){
     let currentValueWithoutInterest = moneyInNumberFormat 
@@ -79,7 +94,8 @@ export function Home(){
     
     let divisionOfPlots = (currentValue / portionInit).toFixed(2)
     divisionOfPlots = parseFloat(divisionOfPlots)
-    
+
+
     for (let i = 1; i < 7; i++) {
       valueOfInstallments.push({
         option: i + 1,
@@ -87,8 +103,6 @@ export function Home(){
         installmentValue: parseFloat(currentValue.toFixed(2)),
         divisionOfPlots: divisionOfPlots
       });
-
-      
 
       portionInit += 1
       
@@ -100,13 +114,16 @@ export function Home(){
 
       let value = (currentValue / portionInit).toFixed(2)
       divisionOfPlots = parseFloat(value)
+
+     
     }
 
-    console.log(valueOfInstallments)
+    valueOfInstallments.map(value => console.log('Vetor 1: ', value.divisionOfPlots))
+    
   }
 
   calculateInstallments()
- 
+
   return(
     <GridContainer>
       <Header />
@@ -128,7 +145,6 @@ export function Home(){
         >
           Fazer simulação
         </button>
-        {/* {moneyInStringFormat !== null && <p>Valor Real: {moneyInStringFormat}</p>} */}
       </form>
 
   
@@ -157,8 +173,8 @@ export function Home(){
                     option={value.option}
                     key={value.portion}
                     numberOfInstallments={value.portion}
-                    installmentValue={value.divisionOfPlots}
-                    total={value.installmentValue}
+                    installmentValue={formatCurrencyForStringAttributes(value.divisionOfPlots)}
+                    total={formatCurrencyForStringAttributes(value.installmentValue)}
                     showLabel='visible'
                     nameLabel='Pix Parcelado'
                     borderRadius='border-t-2 rounded-t-xl'
@@ -172,8 +188,8 @@ export function Home(){
                     option={value.option}
                     key={value.portion}
                     numberOfInstallments={value.portion}
-                    installmentValue={value.divisionOfPlots}
-                    total={value.installmentValue}
+                    installmentValue={formatCurrencyForStringAttributes(value.divisionOfPlots)}
+                    total={formatCurrencyForStringAttributes(value.installmentValue)}
                     showLabel='hidden'
                   />
                 )
@@ -184,8 +200,8 @@ export function Home(){
                   option={value.option}
                   key={value.portion}
                   numberOfInstallments={value.portion}
-                  installmentValue={value.divisionOfPlots}
-                  total={value.installmentValue}
+                  installmentValue={formatCurrencyForStringAttributes(value.divisionOfPlots)}
+                  total={formatCurrencyForStringAttributes(value.installmentValue)}
                   discountedValue={3}
                 />
               )
@@ -209,7 +225,7 @@ export function Home(){
           )}
         </>
       )}
-    
+
       <Footer />
     </GridContainer>
   )
