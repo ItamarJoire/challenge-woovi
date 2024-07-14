@@ -4,14 +4,13 @@ import { useContext, useEffect } from 'react'
 import { PaymentContext } from '../contexts/usePayment'
 
 export function Price({ 
-  amount, 
+  numberOfInstallments, 
   total, 
-  value, 
-  valueTag, 
-  showTag = 'hidden', 
-  nameTag, 
+  installmentValue, 
+  discountedValue, 
+  installmentValueNumber,
   option, 
-  showLabel ='hidden',
+  showLabel = 'hidden',
   nameLabel,
   cashback = false,
   percentageCashback,
@@ -24,21 +23,25 @@ export function Price({
     console.log(values)
   }, [values])
 
-  function updateValues(amount, value, total, option){
+  function updateValues(numberOfInstallments, installmentValue, total, option){
     setValues({
-      amount: amount,
-      value: convertToNumber(value),
-      total: convertToNumber(total),
+      numberOfInstallments: numberOfInstallments,
+      installmentValue: installmentValue,
+      total: total,
       option: option
     })
 
     setActiveButton(true)
   }
 
-  function convertToNumber(value){
-    let number = value.replace(/\./g, '').replace(',', '.');
-    return Number(number);
+
+  function interestCalculation(){
+    const calculationCashback = (percentageCashback / 100) * installmentValueNumber 
+    console.log('Calculation', calculationCashback)
+    return calculationCashback
   }
+
+  const interest = interestCalculation()
 
   return(
     <div className={`${values.option === option ? 'border-primary bg-primary/5 border-2' : 'border-zinc-200'} border-l-2 border-r-2 border-b-2 ${borderRadius}  p-5 relative `}>
@@ -50,7 +53,7 @@ export function Price({
       <div className='space-y-2'>
         <div className='flex items-baseline justify-between'>
           <div>
-            <p className='text-2xl font-semibold text-zinc-700'><span className='font-extrabold text-zinc-800'>{amount}x</span> R$ {value}</p>
+            <p className='text-2xl font-semibold text-zinc-700'><span className='font-extrabold text-zinc-800'>{numberOfInstallments}x</span> R$ {installmentValue}</p>
             {cashback ? (
               <p className='text-xl text-primary font-medium'>Ganhe <span className='font-extrabold'>{percentageCashback}%</span> de Cashback</p>
             ) : (
@@ -60,15 +63,24 @@ export function Price({
           </div>
 
           <label className='custom-radio'>
-            <input type="radio" name='option' value={option} onClick={() => updateValues(amount, value, total, option)}/>
+            <input type="radio" name='option' value={option} onClick={() => updateValues(numberOfInstallments, installmentValue, total, option)}/>
             <span class="checkmark"></span>
           </label>
 
         </div>   
         
-        <div className={`relative' ${showTag}`}>
-          <p className='absolute text-white font-semibold px-2 py-1.5'><span className='font-extrabold'>{valueTag}</span> {nameTag}</p>
-          <img src={Tag} alt="" />
+        <div className='relative'>
+          {option === 1 ? (
+            <div>
+              <p className='absolute text-white font-semibold px-2 py-1.5'>🤑 <span className='font-extrabold'>R$ {interest}</span> de volta no seu Pix na hora</p>
+              <img src={Tag} alt="" />
+              </div>
+          ) : option === 4 ? (
+            <div>
+            <p className='absolute text-white font-semibold px-2 py-1.5'><span className='font-extrabold'>-{discountedValue} % de juros</span>: Melhor opção de parcelamento</p>
+            <img src={Tag} alt="" />
+            </div>
+          ) : null}
         </div>
       </div>
     </div>

@@ -9,21 +9,33 @@ import { Link } from 'react-router-dom'
 export function Home(){
   const { activeButton } = useContext(PaymentContext)
 
-  const [ moneyInitial, setMoneyInitial ] = useState('')
-  const [ realValue, setRealValue ] = useState(null)
-  const [ convertReal, setConvertReal ] = useState(null)
+  const [ simulatedMoney, setSimulatedMoney ] = useState('')
+
+  const [ moneyInStringFormat, setMoneyInStringFormat ] = useState('')
+  const [ moneyInNumberFormat, setMoneyInNumberFormat ] = useState(0)
+
+  const [showInstallments, setShowInstallments] = useState(false)
 
   function formatInputValue(value){
+
     // Remove tudo que não for dígito ou vírgula
     let cleanedValue = value.replace(/[^0-9,]/g, '');
+
     // Adiciona ponto como separador de milhar
     cleanedValue = cleanedValue.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
     return cleanedValue;
   }
 
-  function handleInputChange(e){
+  function handleChangeSimulatedMoney(e){
+
     const formattedValue = formatInputValue(e.target.value);
-    setMoneyInitial(formattedValue);
+    
+    // console.log('onChange: ', formattedValue)
+    setSimulatedMoney(formattedValue);
+
+    if(e.target.value != simulatedMoney){
+      setShowInstallments(false)
+    }
   }
 
   function convertToNumber(value) {
@@ -31,101 +43,173 @@ export function Home(){
     return Number(number);
   }
 
-  function handleButtonClick(){
-    const numericValue = convertToNumber(moneyInitial);
-    setRealValue(numericValue);
-    formatCurrency(numericValue)
+  function handleSubmit(e){
+    e.preventDefault()
+    
+    const numberFormat = convertToNumber(simulatedMoney);
+    
+    console.log('numberFormat: ', numberFormat)
+    
+    setMoneyInNumberFormat(numberFormat);
+   
+    formatCurrencyForString(numberFormat)
+
+    setShowInstallments(true)
   }
 
-  function formatCurrency(value){
-    const newValue = value.toLocaleString('pt-BR', {
+  function formatCurrencyForString(value){
+    const stringFormat = value.toLocaleString('pt-BR', {
       style: 'decimal',
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     });
 
-    setConvertReal(newValue)
-  };
+    console.log('stringFormat:', stringFormat)
+    
+    setMoneyInStringFormat(stringFormat)
+  }
 
+  let valueOfInstallments = [];
+
+  function calculateInstallments(){
+    let currentValueWithoutInterest = moneyInNumberFormat 
+    let currentValue = currentValueWithoutInterest += currentValueWithoutInterest * (7 / 100);
+    
+    let portionInit = 2
+    
+    let divisionOfPlots = (currentValue / portionInit).toFixed(2)
+    divisionOfPlots = parseFloat(divisionOfPlots)
+    
+    for (let i = 1; i < 7; i++) {
+      valueOfInstallments.push({
+        option: i + 1,
+        portion: portionInit,
+        installmentValue: parseFloat(currentValue.toFixed(2)),
+        divisionOfPlots: divisionOfPlots
+      });
+
+      
+
+      portionInit += 1
+      
+      if(portionInit === 4){
+        
+      }
+
+      currentValue += currentValue * (7 / 100);
+
+      let value = (currentValue / portionInit).toFixed(2)
+      divisionOfPlots = parseFloat(value)
+    }
+
+    console.log(valueOfInstallments)
+  }
+
+  calculateInstallments()
+ 
   return(
     <GridContainer>
       <Header />
 
       <TitleContainer title='João, como você quer pagar?' />
       
-      <div className='mb-12'>
+      <form onSubmit={handleSubmit} className='mb-12'>
         <input 
           type="text" 
-          value={moneyInitial} 
-          onChange={handleInputChange} 
+          value={simulatedMoney} 
+          onChange={handleChangeSimulatedMoney} 
           placeholder='Digite o valor'
-          className='rounded-lg text-zinc-700 font-semibold border-2 bg-zinc-100 border-zinc-200 px-5 py-2 focus:border-primary transition-colors duration-300 outline-none'
+          className='rounded-lg text-zinc-700 font-semibold border-2 bg-zinc-100 border-zinc-200 px-5 py-2 focus:border-primary transition-colors duration-300 outline-none '
         />
 
         <button 
-          type='button' 
-          onClick={handleButtonClick} 
-          className='bg-primary text-white font-bold rounded-lg px-5 py-2.5 ml-6'
+          type='input' 
+          className='bg-primary text-white font-bold rounded-lg px-5 py-2.5 ml-6 hover:bg-primary/60 transition-all duration-200'
         >
           Fazer simulação
         </button>
-        {realValue !== null && <p>Valor Real: {realValue}</p>}
-      </div>
+        {/* {moneyInStringFormat !== null && <p>Valor Real: {moneyInStringFormat}</p>} */}
+      </form>
 
-      <div>
-        <Price 
-          showLabel='visible'
-          nameLabel='Pix'
-          amount={1}
-          option={1}
-          value={convertReal}
-          total='30.500,00'
-          cashback={true}
-          showTag='visible'
-          percentageCashback={3}
-          nameTag='🤑 R$ 300,00 de volta no seu Pix na hora'
-          borderRadius='border-t-2 rounded-xl'
-        />
+  
+      {showInstallments && (
+        <>
+          <div>
+            <Price 
+              showLabel='visible'
+              nameLabel='Pix'
+              numberOfInstallments={1}
+              option={1}
+              installmentValue={moneyInStringFormat}
+              installmentValueNumber={moneyInNumberFormat}
+              cashback={true}
+              discountedValue={3}
+              percentageCashback={3}
+              borderRadius='border-t-2 rounded-xl'
+            />
+          </div>
 
-        <div className='mt-8'>
-          <Price 
-            amount={2}
-            option={2}
-            value='15.300,00'
-            total='30.600,00'
-            borderRadius='border-t-2 rounded-t-xl'
-          />
-          
-          <Price 
-            amount={3}
-            option={3}
-            value='10.196,66'
-            total='30.620,00'
-          />
+          <div className='mt-8'>
+            {valueOfInstallments.map(value => {
+              if(value.option === 2){
+                return(
+                  <Price 
+                    option={value.option}
+                    key={value.portion}
+                    numberOfInstallments={value.portion}
+                    installmentValue={value.divisionOfPlots}
+                    total={value.installmentValue}
+                    showLabel='visible'
+                    nameLabel='Pix Parcelado'
+                    borderRadius='border-t-2 rounded-t-xl'
+                  />
+                )
+              }
 
-          <Price 
-            amount={4}
-            option={4}
-            value='7.725,00'
-            total='30.900,00'
-            showTag='visible'
-            nameTag='-3% de juros: Melhor opção de parcelamento'
-          />
-        </div>
-      </div>
+              else if(value.option > 2 && value.option <= 3){
+                return(
+                  <Price 
+                    option={value.option}
+                    key={value.portion}
+                    numberOfInstallments={value.portion}
+                    installmentValue={value.divisionOfPlots}
+                    total={value.installmentValue}
+                    showLabel='hidden'
+                  />
+                )
+              }
 
-      {activeButton ? (
-        <Link to='/pix'>
-        <button className='bg-secondary flex gap-2 px-5 py-2 rounded-lg mt-10 mx-auto w-full'>
-          <p className="text-white text-lg font-semibold mx-auto">Avançar</p>
-        </button>
-        </Link>
-      ) : (
-        <button className='bg-zinc-300 cursor-not-allowed flex gap-2 px-5 py-2 rounded-lg mt-10 mx-auto w-full'>
-          <p className="text-white text-lg font-semibold mx-auto">Avançar</p>
-        </button>
+              return(
+                <Price 
+                  option={value.option}
+                  key={value.portion}
+                  numberOfInstallments={value.portion}
+                  installmentValue={value.divisionOfPlots}
+                  total={value.installmentValue}
+                  discountedValue={3}
+                />
+              )
+
+              
+              })
+            }
+            
+          </div>
+
+          {activeButton ? (
+          <Link to='/pix'>
+          <button className='bg-secondary flex gap-2 px-5 py-2 rounded-lg mt-10 mx-auto w-full'>
+            <p className="text-white text-lg font-semibold mx-auto">Avançar</p>
+          </button>
+          </Link>
+            ) : (
+          <button className='bg-zinc-300 cursor-not-allowed flex gap-2 px-5 py-2 rounded-lg mt-10 mx-auto w-full'>
+            <p className="text-white text-lg font-semibold mx-auto">Avançar</p>
+          </button>
+          )}
+        </>
       )}
-      
+    
       <Footer />
     </GridContainer>
   )
