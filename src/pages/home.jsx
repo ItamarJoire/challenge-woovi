@@ -1,18 +1,18 @@
-import { Price, Footer, Header } from '../components'
-import { GridContainer, TitleContainer } from '../containers'
+import { ParcelInformation, Footer, Header, Grid, Title } from '../components'
 
 import { useContext, useState } from 'react'
-import { PaymentContext } from '../contexts/usePayment'
+import { PaymentContext } from '../contexts/payment'
 
 import { Link } from 'react-router-dom'
 
+import { formatNumberForString } from '../helpers/format-number-for-string'
+
 export function Home(){
-  const { activeButton } = useContext(PaymentContext)
+  const { values, activeButton } = useContext(PaymentContext)
 
   const [ simulatedMoney, setSimulatedMoney ] = useState('')
 
   const [ moneyInStringFormat, setMoneyInStringFormat ] = useState('')
-  const [ moneyInStringFormat2, setMoneyInStringFormat2 ] = useState('')
   const [ moneyInNumberFormat, setMoneyInNumberFormat ] = useState(0)
 
   const [showInstallments, setShowInstallments] = useState(false)
@@ -31,7 +31,6 @@ export function Home(){
 
     const formattedValue = formatInputValue(e.target.value);
 
-    // console.log('onChange: ', formattedValue)
     setSimulatedMoney(formattedValue);
 
     if(e.target.value != simulatedMoney){
@@ -48,9 +47,7 @@ export function Home(){
     e.preventDefault()
     
     const numberFormat = convertToNumber(simulatedMoney);
-    
-    console.log('numberFormat: ', numberFormat)
-    
+        
     setMoneyInNumberFormat(numberFormat);
    
     formatCurrencyForString(numberFormat)
@@ -64,27 +61,11 @@ export function Home(){
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     });
-
-    console.log('stringFormat:', stringFormat)
    
     setMoneyInStringFormat(stringFormat)
-
-    setMoneyInStringFormat2(stringFormat)
-
-  }
-
-  function formatCurrencyForStringAttributes(value){
-    const stringFormat = value.toLocaleString('pt-BR', {
-      style: 'decimal',
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    });
-
-    return stringFormat
   }
 
   let valueOfInstallments = [];
-  let valueOfInstallmentsForString = [];
 
   function calculateInstallments(){
     let currentValueWithoutInterest = moneyInNumberFormat 
@@ -94,7 +75,6 @@ export function Home(){
     
     let divisionOfPlots = (currentValue / portionInit).toFixed(2)
     divisionOfPlots = parseFloat(divisionOfPlots)
-
 
     for (let i = 1; i < 7; i++) {
       valueOfInstallments.push({
@@ -114,21 +94,23 @@ export function Home(){
 
       let value = (currentValue / portionInit).toFixed(2)
       divisionOfPlots = parseFloat(value)
-
-     
     }
 
-    valueOfInstallments.map(value => console.log('Vetor 1: ', value.divisionOfPlots))
+    // valueOfInstallments.map(value => console.log('valueOfInstallments: ', value))
     
   }
 
   calculateInstallments()
 
-  return(
-    <GridContainer>
-      <Header />
+  function storagePayment(){
+    console.log('O que vem de Values: ', values)
+    localStorage.setItem('@payment', JSON.stringify(values))
+  }
 
-      <TitleContainer title='João, como você quer pagar?' />
+  return(
+    <Grid>
+      <Header />
+      <Title title='João, como você quer pagar?' />
       
       <form onSubmit={handleSubmit} className='mb-12'>
         <input 
@@ -151,13 +133,14 @@ export function Home(){
       {showInstallments && (
         <>
           <div>
-            <Price 
+            <ParcelInformation 
               showLabel='visible'
               nameLabel='Pix'
               numberOfInstallments={1}
               option={1}
               installmentValue={moneyInStringFormat}
               installmentValueNumber={moneyInNumberFormat}
+              total={moneyInNumberFormat}
               cashback={true}
               discountedValue={3}
               percentageCashback={3}
@@ -169,12 +152,12 @@ export function Home(){
             {valueOfInstallments.map(value => {
               if(value.option === 2){
                 return(
-                  <Price 
+                  <ParcelInformation 
                     option={value.option}
                     key={value.portion}
                     numberOfInstallments={value.portion}
-                    installmentValue={formatCurrencyForStringAttributes(value.divisionOfPlots)}
-                    total={formatCurrencyForStringAttributes(value.installmentValue)}
+                    installmentValue={formatNumberForString(value.divisionOfPlots)}
+                    total={formatNumberForString(value.installmentValue)}
                     showLabel='visible'
                     nameLabel='Pix Parcelado'
                     borderRadius='border-t-2 rounded-t-xl'
@@ -184,24 +167,24 @@ export function Home(){
 
               else if(value.option > 2 && value.option <= 3){
                 return(
-                  <Price 
+                  <ParcelInformation 
                     option={value.option}
                     key={value.portion}
                     numberOfInstallments={value.portion}
-                    installmentValue={formatCurrencyForStringAttributes(value.divisionOfPlots)}
-                    total={formatCurrencyForStringAttributes(value.installmentValue)}
+                    installmentValue={formatNumberForString(value.divisionOfPlots)}
+                    total={formatNumberForString(value.installmentValue)}
                     showLabel='hidden'
                   />
                 )
               }
 
               return(
-                <Price 
+                <ParcelInformation 
                   option={value.option}
                   key={value.portion}
                   numberOfInstallments={value.portion}
-                  installmentValue={formatCurrencyForStringAttributes(value.divisionOfPlots)}
-                  total={formatCurrencyForStringAttributes(value.installmentValue)}
+                  installmentValue={formatNumberForString(value.divisionOfPlots)}
+                  total={formatNumberForString(value.installmentValue)}
                   discountedValue={3}
                 />
               )
@@ -209,24 +192,23 @@ export function Home(){
               
               })
             }
-            
           </div>
 
           {activeButton ? (
-          <Link to='/pix'>
-          <button className='bg-secondary flex gap-2 px-5 py-2 rounded-lg mt-10 mx-auto w-full'>
-            <p className="text-white text-lg font-semibold mx-auto">Avançar</p>
-          </button>
-          </Link>
-            ) : (
-          <button className='bg-zinc-300 cursor-not-allowed flex gap-2 px-5 py-2 rounded-lg mt-10 mx-auto w-full'>
-            <p className="text-white text-lg font-semibold mx-auto">Avançar</p>
-          </button>
-          )}
+            <Link to='/pix' onClick={storagePayment}>
+              <button className='bg-secondary flex gap-2 px-5 py-2 rounded-lg mt-10 mx-auto w-full'>
+                <p  className="text-white text-lg font-semibold mx-auto">Avançar</p>
+              </button>
+            </Link>
+              ) : (
+            <button className='bg-zinc-300 cursor-not-allowed flex gap-2 px-5 py-2 rounded-lg mt-10 mx-auto w-full'>
+              <p className="text-white text-lg font-semibold mx-auto">Avançar</p>
+            </button>
+            )}
         </>
       )}
 
       <Footer />
-    </GridContainer>
+    </Grid>
   )
 }

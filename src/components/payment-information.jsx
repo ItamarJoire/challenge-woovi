@@ -1,6 +1,6 @@
 import IconArrowUp from '/arrow-up.svg'
 
-export function Payment({ icon, value }){
+export function PaymentInformation({ icon, value }){
   return(
     <div>
         <div className="flex justify-between mt-5">

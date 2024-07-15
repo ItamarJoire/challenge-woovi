@@ -1,4 +1,6 @@
-export { Price } from './price'
+export { ParcelInformation } from './parcel-information'
 export { Header } from './header'
 export { Footer } from './footer'
-export { Payment } from './payment'
+export { PaymentInformation } from './payment-information'
+export { Title } from './title'
+export { Grid } from './grid'

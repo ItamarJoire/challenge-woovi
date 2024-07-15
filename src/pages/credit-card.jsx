@@ -1,13 +1,12 @@
-import { Footer, Header, Payment } from "../components";
-import { GridContainer, TitleContainer } from "../containers";
+import { Footer, Header, PaymentInformation, Grid, Title } from "../components";
 
 import IconLineCheckGreen from '/line-check-green.svg'
 
 export function CreditCard(){
   return(
-    <GridContainer>
+    <Grid>
       <Header />
-      <TitleContainer title='João, pague o restante em 1x no cartão'/>
+      <Title title='João, pague o restante em 1x no cartão'/>
 
       <form>
         <div className="space-y-7">
@@ -57,9 +56,9 @@ export function CreditCard(){
         <p className="text-zinc-600 font-extrabold">15/12/2021 - 08:17</p>
       </div>
 
-      <Payment icon={IconLineCheckGreen} value='31.500,00'/>
+      <PaymentInformation icon={IconLineCheckGreen} value='31.500,00'/>
 
       <Footer />
-    </GridContainer>
+    </Grid>
   )
 }

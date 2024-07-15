@@ -1,9 +1,9 @@
 
 import Tag from '/tag.png'
-import { useContext, useEffect } from 'react'
-import { PaymentContext } from '../contexts/usePayment'
+import { useContext } from 'react'
+import { PaymentContext } from '../contexts/payment'
 
-export function Price({ 
+export function ParcelInformation({ 
   numberOfInstallments, 
   total, 
   installmentValue, 
@@ -27,13 +27,15 @@ export function Price({
       option: option
     })
 
+    console.log('Values: ', values)
+
     setActiveButton(true)
   }
 
 
   function interestCalculation(){
     const calculationCashback = (percentageCashback / 100) * installmentValueNumber 
-    console.log('Calculation', calculationCashback)
+    // console.log('Calculation', calculationCashback)
     return calculationCashback
   }
 
@@ -60,7 +62,7 @@ export function Price({
 
           <label className='custom-radio'>
             <input type="radio" name='option' value={option} onClick={() => updateValues(numberOfInstallments, installmentValue, total, option)}/>
-            <span class="checkmark"></span>
+            <span className="checkmark"></span>
           </label>
 
         </div>   
