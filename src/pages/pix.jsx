@@ -1,4 +1,4 @@
-import { Footer, Header, PaymentInformation, Grid, Title } from "../components";
+import { Footer, Header, PaymentInformation, Grid, Title, QrCodeReader } from "../components";
 
 import ImgQrCode from '/qr-code.png'
 import IconCopy from '/copy.svg'
@@ -29,6 +29,7 @@ export function Pix(){
           <Title title={`João, use o QR Code do Pix para pagar`}/>
           <p className="text-center mt-[-24px] text-zinc-600 mb-8">Abra o app em que vai fazer o pagamento, escaneie a imagem ou cole o código do QR Code</p>
 
+          <QrCodeReader />
           <img src={ImgQrCode} className="mx-auto border-2 border-primary rounded-[10px] p-1.5"/>
 
           <p className="mt-3 text-center text-3xl font-extrabold">R$ {values.total}</p>
@@ -42,7 +43,10 @@ export function Pix(){
       ): (
         <div>
           <Title title={`João, pague a entrada de R$ ${values.total} pelo Pix`}/>
-
+          
+          <div className="mx-auto border-2 border-primary rounded-[10px] p-1.5">
+            <QrCodeReader />
+          </div>
           <img src={ImgQrCode} className="mx-auto border-2 border-primary rounded-[10px] p-1.5"/>
 
           <button className="bg-secondary flex gap-2 px-5 py-2 rounded-lg mt-5 mx-auto">
