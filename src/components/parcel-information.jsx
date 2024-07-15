@@ -70,12 +70,12 @@ export function ParcelInformation({
         <div className='relative'>
           {option === 1 ? (
             <div>
-              <p className='absolute text-white font-semibold px-2 py-1.5'>🤑 <span className='font-extrabold'>R$ {interest}</span> de volta no seu Pix na hora</p>
+              <p className='absolute text-white font-semibold px-2 py-1.5'>🤑 <span className='font-extrabold '>R$ {interest}</span> de volta no seu Pix na hora</p>
               <img src={Tag} alt="" />
               </div>
           ) : option === 4 ? (
             <div>
-            <p className='absolute text-white font-semibold px-2 py-1.5'><span className='font-extrabold'>-{discountedValue} % de juros</span>: Melhor opção de parcelamento</p>
+            <p className='absolute text-white font-semibold px-2 py-1.5'><span className='font-extrabold'>-{discountedValue} % de juros</span>: melhor opção</p>
             <img src={Tag} alt="" />
             </div>
           ) : null}

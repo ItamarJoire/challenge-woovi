@@ -112,18 +112,18 @@ export function Home(){
       <Header />
       <Title title='João, como você quer pagar?' />
       
-      <form onSubmit={handleSubmit} className='mb-12'>
+      <form onSubmit={handleSubmit} className='mb-12 mx-auto text-center'>
         <input 
           type="text" 
           value={simulatedMoney} 
           onChange={handleChangeSimulatedMoney} 
           placeholder='Digite o valor'
-          className='rounded-lg text-zinc-700 font-semibold border-2 bg-zinc-100 border-zinc-200 px-5 py-2 focus:border-primary transition-colors duration-300 outline-none '
+          className='rounded-lg w-full sm:w-56  text-zinc-700 font-semibold border-2 bg-zinc-100 border-zinc-200 px-3 py-2 focus:border-primary transition-colors duration-300 outline-none '
         />
 
         <button 
           type='input' 
-          className='bg-primary text-white font-bold rounded-lg px-5 py-2.5 ml-6 hover:bg-primary/60 transition-all duration-200'
+          className='bg-primary text-white font-bold rounded-lg w-full sm:w-40 mt-3 sm:mt-0 px-5 py-2.5 sm:ml-6 hover:bg-primary/60 transition-all duration-200'
         >
           Fazer simulação
         </button>
@@ -177,7 +177,8 @@ export function Home(){
                   />
                 )
               }
-
+              
+        
               return(
                 <ParcelInformation 
                   option={value.option}
@@ -186,6 +187,7 @@ export function Home(){
                   installmentValue={formatNumberForString(value.divisionOfPlots)}
                   total={formatNumberForString(value.installmentValue)}
                   discountedValue={3}
+                  borderRadius={value.option === 7 && (`rounded-b-xl`)}
                 />
               )
 
