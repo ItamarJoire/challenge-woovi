@@ -3,6 +3,8 @@ import Tag from '/tag.png'
 import { useContext } from 'react'
 import { PaymentContext } from '../contexts/payment'
 
+import { v4 as uuidv4 } from 'uuid';
+
 export function ParcelInformation({ 
   numberOfInstallments, 
   total, 
@@ -18,13 +20,18 @@ export function ParcelInformation({
 }){
   
   const { setActiveButton, values, setValues } = useContext(PaymentContext)
+  
+  const idQrCode = uuidv4()
+  const idPayment = uuidv4()
 
-  function updateValues(numberOfInstallments, installmentValue, total, option){
+  function updateValues(idPayment, numberOfInstallments, installmentValue, total, option, idQrCode){
     setValues({
+      idPayment: idPayment,
       numberOfInstallments: numberOfInstallments,
       installmentValue: installmentValue,
       total: total,
-      option: option
+      option: option,
+      idQrCode: idQrCode
     })
 
     console.log('Values: ', values)
@@ -35,7 +42,7 @@ export function ParcelInformation({
 
   function interestCalculation(){
     const calculationCashback = (percentageCashback / 100) * installmentValueNumber 
-    // console.log('Calculation', calculationCashback)
+
     return calculationCashback
   }
 
@@ -61,7 +68,7 @@ export function ParcelInformation({
           </div>
 
           <label className='custom-radio'>
-            <input type="radio" name='option' value={option} onClick={() => updateValues(numberOfInstallments, installmentValue, total, option)}/>
+            <input type="radio" name='option' value={option} onClick={() => updateValues(idPayment, numberOfInstallments, installmentValue, total, option, idQrCode)}/>
             <span className="checkmark"></span>
           </label>
 

@@ -12,7 +12,9 @@ export function PaymentProvider({children}){
   const location = useLocation()
 
   useEffect(() => {
-    if(location.pathname === '/') localStorage.removeItem('@payment')
+    if(location.pathname === '/') {
+      localStorage.removeItem('@payment')
+    }
 
   }, [location.pathname])
 
@@ -24,7 +26,7 @@ export function PaymentProvider({children}){
         activeButton,
         setActiveButton,
         values, 
-        setValues
+        setValues,
       }}
     >
       {children}
