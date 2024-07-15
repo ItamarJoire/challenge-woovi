@@ -108,6 +108,7 @@ export function Home(){
   }
 
   return(
+    <div className='relative'>
     <Grid>
       <Header />
       <Title title='João, como você quer pagar?' />
@@ -197,20 +198,26 @@ export function Home(){
           </div>
 
           {activeButton ? (
-            <Link to='/pix' onClick={storagePayment}>
-              <button className='bg-secondary flex gap-2 px-5 py-2 rounded-lg mt-10 mx-auto w-full'>
-                <p  className="text-white text-lg font-semibold mx-auto">Avançar</p>
-              </button>
-            </Link>
+         
+           <div className='bg-white w-full fixed bottom-0 left-0 py-6 z-10 px-3 shadow-inner'>
+              <Link to='/pix' onClick={storagePayment}>
+                <button className='bg-secondary flex gap-2 px-5 py-2 rounded-lg mx-auto w-full sm:max-w-[380px] hover:opacity-60 transition-opacity duration-200'>
+                  <p  className="text-white text-lg font-semibold mx-auto">Avançar</p>
+                </button>
+              </Link>
+            </div>
               ) : (
-            <button className='bg-zinc-300 cursor-not-allowed flex gap-2 px-5 py-2 rounded-lg mt-10 mx-auto w-full'>
-              <p className="text-white text-lg font-semibold mx-auto">Avançar</p>
-            </button>
+            <div className='bg-white w-full fixed bottom-0 left-0 py-6 z-10 px-3 shadow-inner'>
+              <button className='bg-zinc-300 cursor-not-allowed flex gap-2 px-5 py-2 rounded-lg W mx-auto w-full sm:max-w-[380px]'>
+                <p className="text-white text-lg font-semibold mx-auto">Avançar</p>
+              </button>
+            </div>
             )}
         </>
       )}
 
       <Footer />
     </Grid>
+    </div>
   )
 }
