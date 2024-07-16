@@ -43,7 +43,7 @@ export function Pix(){
 
           <QrCodeReader value={values.total}/>
 
-          <CountdownTimer initialMinutes={0.5}/>
+          <CountdownTimer initialMinutes={0.3}/>
         </div>
       ) : (
         <div>
@@ -51,8 +51,8 @@ export function Pix(){
           <p className="text-center mt-[-24px] text-zinc-600 mb-8">Abra o app em que vai fazer o pagamento, escaneie a imagem ou copie o código do QR Code</p>
 
           <QrCodeReader />
-           
-          <CountdownTimerCrediCard initialMinutes={.5}/>
+w           
+          <CountdownTimerCrediCard initialMinutes={.3}/>
 
           <PaymentInformation icon={IconLineCheck} />
         </div> 
