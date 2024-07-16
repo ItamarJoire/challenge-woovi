@@ -43,7 +43,7 @@ export function Pix(){
 
           <QrCodeReader value={values.total}/>
 
-          <CountdownTimer initialMinutes={0.10}/>
+          <CountdownTimer initialMinutes={0.5}/>
         </div>
       ) : (
         <div>
@@ -52,7 +52,7 @@ export function Pix(){
 
           <QrCodeReader />
            
-          <CountdownTimerCrediCard initialMinutes={.2}/>
+          <CountdownTimerCrediCard initialMinutes={.5}/>
 
           <PaymentInformation icon={IconLineCheck} />
         </div> 
