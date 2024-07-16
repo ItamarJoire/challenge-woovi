@@ -7,7 +7,7 @@ import { formatNumberForString } from '../helpers/format-number-for-string'
 
 export function PaymentInformation({ icon }){
   const { values } = useContext(PaymentContext)
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(true)
 
   const paymentCard = values.total - values.installmentValue
 

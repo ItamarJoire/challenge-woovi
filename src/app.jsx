@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export function App() {
   return (
+ 
     <BrowserRouter>
       <PaymentProvider>
         <ToastContainer autoClose={3000}/>
