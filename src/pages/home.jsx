@@ -4,6 +4,7 @@ import { useContext, useState } from 'react'
 import { PaymentContext } from '../contexts/payment'
 
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 export function Home(){
   const { values, activeButton } = useContext(PaymentContext)
@@ -16,6 +17,11 @@ export function Home(){
 
   function handleSubmit(e){
     e.preventDefault()
+    
+    if(simulatedMoney < 50){
+      toast.error("Valor tem que ser maior ou igual a R$ 50,00")
+      return
+    }
     
     const numberFormat = convertToNumber(simulatedMoney); 
 
