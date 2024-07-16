@@ -18,8 +18,8 @@ export function Home(){
   function handleSubmit(e){
     e.preventDefault()
     
-    if(simulatedMoney < 50){
-      toast.error("Valor tem que ser maior ou igual a R$ 50,00")
+    if(simulatedMoney < 1){
+      toast.error("Valor tem que ser maior ou igual a R$ 1,00")
       return
     }
     
