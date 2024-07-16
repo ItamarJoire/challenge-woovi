@@ -1,4 +1,5 @@
 export function formatNumberForString(value) {
+
   const stringFormat = value.toLocaleString('pt-BR', {
     style: 'decimal',
     minimumFractionDigits: 2,

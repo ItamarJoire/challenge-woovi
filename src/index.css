@@ -76,8 +76,8 @@ select {
   --toastify-color-dark: #121212;
   --toastify-color-info: #3498db;
   --toastify-color-success: #02AB7D;
-  --toastify-color-warning: #f1c40f;
-  --toastify-color-error: #e74c3c;
+  --toastify-color-warning: #000;
+  --toastify-color-error: #AB0202;
   --toastify-color-transparent: rgba(255, 255, 255, .7);
 
   --toastify-icon-color-info: var(--toastify-color-info);

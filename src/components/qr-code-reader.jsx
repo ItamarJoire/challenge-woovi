@@ -1,8 +1,10 @@
 import QRCode from "qrcode.react"
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { PaymentContext } from "../contexts/payment";
+
+import { formatNumberForString } from "../helpers/format-number-for-string";
 
 import IconCopy from '/copy.svg'
 import { toast } from "react-toastify";
@@ -12,7 +14,8 @@ export function QrCodeReader(){
 
   function generateQRCodeValue() {
     return `
-      identificador QR Code=${values.idQrCode}
+      Id do QR Code=${values.idQrCode}
+      ${values.numberOfInstallments}x de ${values.installmentValue}
       Total=${values.total}
     `;
   };
@@ -29,7 +32,7 @@ export function QrCodeReader(){
         <QRCode value={generateQRCodeValue(values)} size={240}/>
       </div>
       
-      <p className="mt-3 text-center text-3xl font-extrabold">R$ {values.total}</p>
+      <p className="mt-3 text-center text-3xl font-extrabold">R$ {formatNumberForString(values.installmentValue || 0)}</p>
       
       <div>
         <CopyToClipboard text={values.idQrCode}>
