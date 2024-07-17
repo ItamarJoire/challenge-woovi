@@ -71,7 +71,6 @@ export function CreditCardForm() {
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
-          
         </div>
 
         <div className="relative">
@@ -90,7 +89,6 @@ export function CreditCardForm() {
               .replace(/(\d{4})/g, "$1 ")
               .trim()
             }
-          
             onChange={(e) => setCardNumber(e.target.value)}
             required
           />
@@ -107,7 +105,7 @@ export function CreditCardForm() {
               required
               onChange={(e) => setDate(e.target.value)}
             />
-          </div>
+        </div>
 
           <div className="relative">
             <label className="text-sm text-zinc-700 bg-white absolute top-[-10px] left-[5px] px-2 ml-2">CVV</label>

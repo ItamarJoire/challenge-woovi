@@ -1,7 +1,7 @@
 import QRCode from "qrcode.react"
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { PaymentContext } from "../contexts/payment";
 
 import { formatNumberForString } from "../helpers/format-number-for-string";
