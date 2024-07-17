@@ -29,13 +29,9 @@ export function CreditCardForm() {
   while (count < values.numberOfInstallments - 1) {
     repeatedElements.push(
       <div className="flex items-center gap-2" key={count}>
-        <p className="text-sm text-zinc-400 text-left">
+        <p className="text-bse text-zinc-400 text-left">
           <li><span className="font-bold text-zinc-500 inline-block">{values.numberOfInstallments - count - 1}x</span> de <span className="font-bold text-zinc-500 inline-block">{formatNumberForString(values.installmentValue || 0)}</span></li>
         </p>
-        <p className="text-sm text-zinc-400">-</p>
-        <div className="text-orange-300 flex gap-1 items-center text-sm"> 
-          Pendente 
-        </div> 
       </div>
     );
     count++;
@@ -140,11 +136,11 @@ export function CreditCardForm() {
           <div>
             <div className="space-y-2">
               <div className="flex items-center gap-2">
-                <p className="text-sm text-zinc-400 text-left">
+                <p className="text-base text-zinc-400 text-left">
                   Entrada de <p className="font-bold text-zinc-500 inline-block">{formatNumberForString(values.installmentValue || 0)}</p> no pix
                 </p>
-                <p className="text-sm text-zinc-400">-</p>
-                <div className="text-primary flex gap-1 items-center text-sm"> 
+                <p className="text-base text-zinc-400">-</p>
+                <div className="text-primary flex gap-1 items-center text-base"> 
                   aprovado 
                   <img src={IconCircleCheck} alt="" className="size-4"/>
                 </div> 
@@ -153,7 +149,7 @@ export function CreditCardForm() {
     
               <div className="flex items-center gap-2 pt-6">
                 
-                <p className="text-sm text-zinc-400 text-left">
+                <p className="text-base text-zinc-400 text-left">
                 <span className="font-bold text-zinc-500 inline-block">{values.numberOfInstallments - 1}</span> parcela(s) de <p className="font-bold text-zinc-500 inline-block">{formatNumberForString(values.installmentValue || 0)}</p> no cartão
                 </p>
           
@@ -161,8 +157,8 @@ export function CreditCardForm() {
 
               {repeatedElements.reverse()}
 
-              <p className="text-sm text-zinc-400 text-left pt-6">
-                Total: <span className="font-bold text-zinc-500">{formatNumberForString(values.total || 0)}</span>
+              <p className="text-base text-zinc-400 text-left pt-6">
+                Total:  <span className="font-bold text-zinc-500">R$ {formatNumberForString(values.total || 0)}</span>
               </p>
             </div>
           </div>

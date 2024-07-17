@@ -31,7 +31,7 @@ export function CreditCard(){
 
       <CreditCardForm />
     
-      <PaymentInformationCreditCard icon={IconLineCheckGreen} textColor='text-zinc-700' numberColor='text-zinc-700' text='Resta pagar no cartão'/>
+      <PaymentInformationCreditCard icon={IconLineCheckGreen} textColor='text-zinc-700' numberColor='text-zinc-700' text='Cartão pendente'/>
 
       <Footer />
     </Grid>

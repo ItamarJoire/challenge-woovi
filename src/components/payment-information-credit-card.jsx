@@ -16,7 +16,7 @@ export function PaymentInformationCreditCard({ icon, textColor, numberColor, tex
           <img src={icon}/>
 
           <div className="space-y-3">
-            <p className="text-lg font-medium text-primary">Entrada no pix pago</p>
+            <p className="text-lg font-medium text-primary">Pix aprovado</p>
             <p className={`text-lg font-medium  ${textColor}`}>{text}</p>
           </div>
         </div>
